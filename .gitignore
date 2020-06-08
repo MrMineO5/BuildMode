@@ -1,0 +1,10 @@
+# IntelliJ Users
+/*.iml
+/.idea/
+
+# Eclipse users
+/.project
+/.classpath
+
+# Maven
+/target
