@@ -1,0 +1,8 @@
+name: BuildMode
+author: UltraDev
+main: xyz.ultradev.buildmode.BuildMode
+version: 1.0.0
+commands:
+  buildmode:
+    aliases: [build]
+    description: "The main command for the BuildMode plugin"
