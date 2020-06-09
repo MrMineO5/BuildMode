@@ -16,6 +16,9 @@ public abstract class BuildModeModule {
                 .getBoolean("integrations." + getName(), false);
     }
     public abstract boolean canEnable();
+
+    public void enable() {};
+
     public abstract boolean canBuild(Player pl, Location loc);
 
 }

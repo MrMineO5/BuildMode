@@ -2,6 +2,8 @@ name: BuildMode
 author: UltraDev
 main: xyz.ultradev.buildmode.BuildMode
 version: 1.0.0
+softdepend:
+  - WorldGuard
 commands:
   buildmode:
     aliases: [build]
