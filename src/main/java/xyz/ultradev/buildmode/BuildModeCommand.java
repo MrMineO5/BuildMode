@@ -22,6 +22,7 @@ public class BuildModeCommand implements CommandExecutor {
             } else {
                 player.sendMessage("§cBuild mode disabled");
             }
+            return true;
         }
         if (args[0].equalsIgnoreCase("on")) {
             if (parent.enable(player.getUniqueId())) {

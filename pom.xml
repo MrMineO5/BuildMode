@@ -17,6 +17,27 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.codemc.worldguardwrapper</pattern>
+                            <shadedPattern>xyz.ultradev.buildmode.libs.worldguardwrapper</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -28,6 +49,10 @@
         <repository>
             <id>sk89q-repo</id>
             <url>https://maven.enginehub.org/repo/</url>
+        </repository>
+        <repository>
+            <id>codemc-repo</id>
+            <url>https://repo.codemc.org/repository/maven-public/</url>
         </repository>
     </repositories>
 
@@ -49,6 +74,11 @@
             <artifactId>worldguard-bukkit</artifactId>
             <version>7.0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.codemc.worldguardwrapper</groupId>
+            <artifactId>worldguardwrapper</artifactId>
+            <version>1.1.8-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

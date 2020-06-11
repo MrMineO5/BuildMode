@@ -2,6 +2,7 @@ package xyz.ultradev.buildmode.modules;
 
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.world.World;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.BukkitUtil;
@@ -16,8 +17,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.codemc.worldguardwrapper.WorldGuardWrapper;
+import org.codemc.worldguardwrapper.flag.IWrappedFlag;
+import org.codemc.worldguardwrapper.flag.IWrappedStatusFlag;
+import org.codemc.worldguardwrapper.flag.WrappedState;
+import org.codemc.worldguardwrapper.implementation.v6.flag.WrappedPrimitiveFlag;
+import org.codemc.worldguardwrapper.region.IWrappedRegion;
 import xyz.ultradev.buildmode.BuildMode;
 import xyz.ultradev.buildmode.BuildModeModule;
+
+import java.util.List;
+import java.util.Set;
 
 public class WorldguardModule extends BuildModeModule {
     private WorldGuard worldGuard;
@@ -38,13 +48,8 @@ public class WorldguardModule extends BuildModeModule {
 
     @Override
     public boolean canBuild(Player pl, Location loc) {
-        World world = BukkitAdapter.adapt(loc.getWorld());
-        RegionManager manager = worldGuard.getPlatform().getRegionContainer().get(world); // Get region manager
-        if (manager == null) {
-            return false; // Cannot check regions
-        }
-        ApplicableRegionSet regs = manager.getApplicableRegions(BukkitAdapter.adapt(loc).toVector().toBlockPoint());
-        StateFlag.State state = regs.queryState(null, Flags.BUILD);
-        return state == StateFlag.State.ALLOW; // Return true if everyone is allowed to build
+        IWrappedFlag<WrappedState> flag = WorldGuardWrapper.getInstance().getFlag("build", WrappedState.class).orElse(null);
+        WrappedState state = WorldGuardWrapper.getInstance().queryFlag(null, loc, flag).orElse(null);
+        return state == WrappedState.ALLOW; // Return true if everyone is allowed to build
     }
 }

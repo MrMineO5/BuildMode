@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.ultradev.buildmode.modules.PermissionModule;
+import xyz.ultradev.buildmode.modules.WorldguardModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,10 @@ public class BuildMode extends JavaPlugin {
     private List<BuildModeModule> enabledModules = new ArrayList<>();
 
     public void onEnable() {
+        loadConfig();
+
         availableModules.add(new PermissionModule(this));
+        availableModules.add(new WorldguardModule(this));
 
         for (BuildModeModule module : availableModules) {
             if (module.shouldEnable()) {
@@ -45,7 +49,7 @@ public class BuildMode extends JavaPlugin {
         return enabled.remove(id);
     }
     public boolean toggle(UUID id) {
-        if (isEnabled()) {
+        if (isEnabled(id)) {
             enabled.remove(id);
             return false;
         } else {
@@ -64,5 +68,10 @@ public class BuildMode extends JavaPlugin {
             }
         }
         return false;
+    }
+
+    private void loadConfig() {
+        getConfig().options().copyDefaults(true);
+        saveConfig();
     }
 }
